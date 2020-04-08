@@ -104,6 +104,29 @@ class Customer:
                                 name=self._name)
         return True
 
+    def delete(self):
+        '''
+        Delete the user on server using API based on email. Will fail if email doesn't exist.
+
+        Returns:
+            passed: whether deletion succeeded
+        '''
+        if self._email is None:
+            print('No email associated with this customer. Cannot create.')
+            return False
+
+        tmp_id = self.get_customer_id(self._email, verbose=False)
+        if tmp_id is None:
+            print('Customer with email {} does not exist'.format(self._email))
+            return False
+
+        r = stripe.Customer.delete(tmp_id)
+        try:
+            return r.get('deleted')
+        except:
+            print('API issue')
+            return False
+
     def info(self):
         '''
         Print the info associated with the Customer object.
