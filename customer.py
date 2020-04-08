@@ -6,7 +6,7 @@ class Customer:
         self._username = username
         self._name = name
 
-    def fetch(self):
+    def retrieve(self):
         if self._email is None:
             print('User email is not defined. Did not fetch customer.')
             return False
@@ -30,8 +30,19 @@ class Customer:
         except:
             self._username = ''
 
-    def post(self):
-        pass
+    def update(self):
+        if self._id is None:
+            print('No id associated with this customer')
+            return False
+        try:
+            stripe.Customer.modify(self._id,
+                                   email=self._email,
+                                   metadata={'username': self._username},
+                                   name=self._name)
+            return True
+        except:
+            print('Error with API request')
+            return False
 
     def info(self):
         print('id: {}'.format(self._id))
