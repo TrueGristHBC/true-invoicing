@@ -167,7 +167,7 @@ class Customer:
             id: customer id
         '''
         try:
-            for c in stripe.Customer.list():
+            for c in stripe.Customer.list(email=email):
                 if c.get('email').lower() == email.lower():
                     return c.get('id')
         except:
