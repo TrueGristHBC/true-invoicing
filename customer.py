@@ -104,9 +104,6 @@ class Customer:
                                 name=self._name)
         return True
 
-
-
-
     def info(self):
         '''
         Print the info associated with the Customer object.
